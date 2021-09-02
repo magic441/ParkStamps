@@ -1,3 +1,4 @@
+export default Object.freeze(
 [
 	{
 		"Code": "LAT0000",
@@ -2167,4 +2168,4 @@
 		"name": "ドリーマーズ・オン・ステージ",
 		"src": "https://media1.tokyodisneyresort.jp/images/adventure/show/2018_thum_name.jpg?mod=20210617122155"
 	}
-]
+])

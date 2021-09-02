@@ -60,6 +60,14 @@
     },
     mounted() {
         console.log(sampleData)
+        this.axios.get('http://localhost:3000/api')
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((e) => {
+            alert(e);
+          });
+
     },
 
 

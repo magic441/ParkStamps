@@ -3,7 +3,11 @@ module.exports = {
     'vuetify'
   ],
   devServer: {
-    proxy: 'http://localhost:8000',
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+      }
+    },
     watchOptions: {
         ignored: /node_modules/,
         poll: true
