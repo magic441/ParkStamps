@@ -60,7 +60,7 @@
     },
     mounted() {
         console.log(sampleData)
-        this.axios.get('http://localhost:3000/api')
+        this.axios.get('http://localhost:3000/api/showschedule')
           .then((response) => {
             console.log(response);
           })
