@@ -4,7 +4,7 @@
             <v-row justify="center">
                 <v-col cols="12" md="9">
                         <v-row class="ma-1">
-                            <h1>{{travelName}}</h1>
+                            <h1>{{travelInfo.name}}</h1>
                             <v-spacer></v-spacer>                        
                             <v-btn class="mx-1" fab dark color="primary" @click="showScheduleForm=true">
                                 <v-icon dark>
@@ -37,7 +37,11 @@
     data () {
         return {
             debug: false,
-            travelName:'さんぷる',
+            travelInfo: {
+                id: 2 ,
+                name: 'さんぷる',
+                date: '08/04'
+            },
             showScheduleForm:false,
             schedules: []
         }
@@ -49,6 +53,18 @@
     methods: {
         recordSchedule: function(newSchedule){
             this.schedules.push(newSchedule)
+            console.log('POSTの実行')        
+            //postの確認
+            this.axios.post('http://localhost:3000/api/createschedule',{
+                travelId: 1,
+                schedule: newSchedule
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((e) => {
+                alert(e);
+            });
         },
         deleteSchedule: function(schedule){
             console.log(this.schedules)
@@ -59,15 +75,19 @@
         }
     },
     mounted() {
-        console.log(sampleData)
-        this.axios.get('http://localhost:3000/api/showschedule')
+        //travelIdからschedulesを持ってくる
+        console.log('GETの実行')
+        this.axios.get('http://localhost:3000/api/showschedule',{
+            params: {
+                travelId: 1
+            }
+        })
           .then((response) => {
             console.log(response);
           })
           .catch((e) => {
             alert(e);
           });
-
     },
 
 

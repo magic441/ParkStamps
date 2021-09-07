@@ -48,14 +48,14 @@
   export default {
     name: 'ScheduleForm',
     props: {
-                
+        
     },
     data: () => ({
         showTimePicker:false,
         park: 'すべて',
         area: 'すべて',
         type:'すべて',
-        dtStart: `${new Date().getHours()}:${new Date().getMinutes()}`,
+        dtStart: `${new Date().getHours()}:${('00' + new Date().getMinutes()).slice(-2)}`,
         spot: '',
         memo: ''
     }),
@@ -100,7 +100,7 @@
         submitSchedule: function(){
             const spot = spotList.filter(spot => spot['name'] == this.spot)[0]
             const newSchedule = {
-                "dtStart" : this.dtStart,
+                "dtStart" : new Date(`${date} ${this.dtStart}`),
                 "spot" : spot,
                 "memo" : this.memo
             }
@@ -109,7 +109,7 @@
     },
     mounted() {
         //dtStartに現在時刻を入れる
-        this.dtStart = `${new Date().getHours()}:${new Date().getMinutes()}`
+        this.dtStart = `${new Date().getHours()}:${('00' + new Date().getMinutes()).slice(-2)}`
     },
   }
 </script>
