@@ -1,13 +1,14 @@
 <template>
     <v-card>
-        <v-card-title>予定を追加</v-card-title>
+        <v-card-title v-if="mode=='create'">予定を追加</v-card-title>
+        <v-card-title v-if="mode=='edit'">予定を編集</v-card-title>
         <v-divider></v-divider>
         <v-container>
             <v-row>
                 <v-col cols="4">
-                    <v-text-field v-model="dtStart" label="Start" v-on:click="showTimePicker=true"></v-text-field>
+                    <v-text-field v-model="startTime" label="Start" v-on:click="showTimePicker=true"></v-text-field>
                     <v-dialog  v-model="showTimePicker" max-width="400px">
-                        <v-time-picker v-model="dtStart" elevation="15" format="ampm"></v-time-picker>
+                        <v-time-picker v-model="startTime" elevation="15" format="ampm"></v-time-picker>
                     </v-dialog>
                 </v-col>
                 <v-spacer></v-spacer>
@@ -35,7 +36,8 @@
             </v-row>
             <v-row start="end">
                 <v-col cols="4">
-                    <v-btn @click="submitSchedule()">登録</v-btn>
+                    <v-btn  v-if="mode=='create'" @click="submitSchedule()">登録</v-btn>
+                    <v-btn  v-if="mode=='edit'" @click="updateSchedule()">登録</v-btn>
                 </v-col>
             </v-row>
         </v-container>
@@ -48,14 +50,15 @@
   export default {
     name: 'ScheduleForm',
     props: {
-        
+        mode: String,
+        schedule: Object
     },
     data: () => ({
         showTimePicker:false,
         park: 'すべて',
         area: 'すべて',
         type:'すべて',
-        dtStart: `${new Date().getHours()}:${('00' + new Date().getMinutes()).slice(-2)}`,
+        startTime: `${new Date().getHours()}:${('00' + new Date().getMinutes()).slice(-2)}`,
         spot: '',
         memo: ''
     }),
@@ -100,16 +103,36 @@
         submitSchedule: function(){
             const spot = spotList.filter(spot => spot['name'] == this.spot)[0]
             const newSchedule = {
-                "dtStart" : new Date(`${date} ${this.dtStart}`),
+                "startTime" : new Date(`2021/09/08 ${this.startTime}`),
                 "spot" : spot,
                 "memo" : this.memo
             }
             this.$emit("submitNewSchedule",newSchedule)
+        },
+        updateSchedule: function(){
+            console.log("update")            
+            const spot = spotList.filter(spot => spot['name'] == this.spot)[0]
+            const newSchedule = {
+                "startTime" : new Date(`2021/09/08 ${this.startTime}`),
+                "spot" : spot,
+                "memo" : this.memo
+            }
+            this.$emit("unpdateSchedule",newSchedule)
         }
     },
     mounted() {
-        //dtStartに現在時刻を入れる
-        this.dtStart = `${new Date().getHours()}:${('00' + new Date().getMinutes()).slice(-2)}`
+        //startTimeに現在時刻を入れる
+        this.startTime = `${new Date().getHours()}:${('00' + new Date().getMinutes()).slice(-2)}`
+        console.log(this.schedule)
+        //編集の場合はpropsの情報でdataを上書きする
+        if(this.mode == 'edit'){
+            this.spot = this.schedule.spot.name
+            this.park = this.schedule.spot.park
+            this.area = this.schedule.spot.area
+            this.type = this.schedule.spot.type
+            this.startTime = this.schedule.startTime
+            this.memo = this.schedule.memo
+        }
     },
   }
 </script>

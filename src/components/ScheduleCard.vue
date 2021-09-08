@@ -9,14 +9,14 @@
                     <div class="text">{{schedule.spot.name}}</div>
                 </v-card-title>
                 <v-card-subtitle>
-                    <div class="text">{{schedule.dtStart}}</div></v-card-subtitle>
+                    <div class="text">{{schedule.startTime}}</div></v-card-subtitle>
                 <v-card-text>
                     <v-row>
                         <v-col cols="10">
                             <div class="text">{{schedule.memo}}</div>
                         </v-col>
-                        <v-col cols="1">
-                            <v-icon>mdi-square-edit-outline</v-icon>
+                        <v-col cols="1" >
+                            <v-icon @click="editSchedule(schedule)">mdi-square-edit-outline</v-icon>
                         </v-col>
                         <v-col cols="1">
                             <v-icon @click="deleteSchedule(schedule)">mdi-delete-outline</v-icon>
@@ -39,9 +39,12 @@
     }),
     methods: {
         deleteSchedule: function(schedule){
-            console.log(schedule)
             this.$emit("deleteSchedule",schedule)
+        },
+        editSchedule: function(schedule){
+            this.$emit("editSchedule",schedule)
         }
+
     },
     
   }
