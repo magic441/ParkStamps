@@ -4,24 +4,28 @@
             <v-row justify="center">
                 <v-col cols="12" md="9">
                         <v-row class="ma-1">
-                            <h1>{{travelInfo.name}}</h1>
-                            <v-spacer></v-spacer>                        
+                            <h1>{{`${travel.date}　${travel.name}`}}</h1>
+                            <v-spacer></v-spacer>
                             <v-btn class="mx-1" fab dark color="primary" @click="isCreateSchedule=true">
                                 <v-icon dark>
                                     mdi-pencil
                                 </v-icon>
                             </v-btn>
                         </v-row>
-                    <ScheduleCard v-for="schedule in schedules" v-bind:key="schedule.name" v-bind:schedule="schedule"
-                     v-on:deleteSchedule="deleteSchedule" v-on:editSchedule="editSchedule"/>                    
+                    <v-list-item>
+                        <v-list-item-content>
+                            <ScheduleCard v-for="schedule in schedules" v-bind:key="schedule.name" v-bind:schedule="schedule"
+                            v-on:deleteSchedule="deleteSchedule" v-on:editSchedule="editSchedule"/>                    
+                        </v-list-item-content>
+                    </v-list-item>
                 </v-col>
-            </v-row>             
-        <v-dialog v-model="isCreateSchedule" max-width="800px" v-if="isCreateSchedule">
-            <ScheduleForm v-on:submitNewSchedule="recordSchedule" :mode="'create'"/>
-        </v-dialog>
-        <v-dialog v-model="isEditSchedule" max-width="800px" v-if="isEditSchedule">
-            <ScheduleForm :mode="'edit'" :schedule="tmpSchedule"/>
-        </v-dialog>
+            </v-row>
+            <v-dialog v-model="isCreateSchedule" max-width="800px" v-if="isCreateSchedule">
+                <ScheduleForm v-on:submitNewSchedule="recordSchedule" :mode="'create'"/>
+            </v-dialog>
+            <v-dialog v-model="isEditSchedule" max-width="800px" v-if="isEditSchedule">
+                <ScheduleForm :mode="'edit'" :schedule="tmpSchedule" v-on:updateSchedule="updateSchedule"/>
+            </v-dialog>
         </v-container>
     </v-app>
 </template>
@@ -40,11 +44,6 @@
     data () {
         return {
             debug: false,
-            travelInfo: {
-                id: 2 ,
-                name: 'さんぷる',
-                date: '08/04'
-            },
             isCreateSchedule:false,
             isEditSchedule:false,
             tmpSchedule:{},
@@ -52,43 +51,96 @@
         }
     },
     props: {
+        travel: Object
     },
     computed:{
     },
     methods: {
         recordSchedule: function(newSchedule){
-            this.schedules.push(newSchedule)
             console.log('POSTの実行')        
-            //postの確認
-            /*
             this.axios.post('http://localhost:3000/api/createschedule',{
-                travelId: 1,
+                travelId: this.travel.id,
                 schedule: newSchedule
             })
             .then((response) => {
-                console.log(response);
+                console.log(response)
+                this.schedules = response.data.map(obj=>{
+                    //spotCodeしか来ないので、spotlistから情報を加えておく
+                    const spot = spotList.filter(spot => {
+                        if(spot["Code"] == obj.spotCode){
+                            return spot
+                        }
+                    })
+                    obj.spot = spot[0]
+                    return obj
+                })
             })
             .catch((e) => {
                 alert(e);
-            });
-            */
+            })
+            this.isCreateSchedule = false
         },
         updateSchedule: function(newSchedule){
-            console.log('UPDATEの実行')        
-        },
-
-        deleteSchedule: function(schedule){
-            console.log(this.schedules)
-            this.schedules = this.schedules.filter(s => {
-            return ! (s == schedule)
+            console.log('UPDATEの実行')
+            console.log(newSchedule)
+            this.axios.put('http://localhost:3000/api/updateschedule',{
+                scheduleId: newSchedule.id,
+                travelId: newSchedule.travelId,
+                startTime: newSchedule.startTime,
+                spotCode: newSchedule.spot.Code,
+                memo: newSchedule.memo
             })
+            .then((response) => {
+                console.log(response);
+                this.schedules = response.data.map(obj=>{
+                    //spotCodeしか来ないので、spotlistから情報を加えておく
+                    const spot = spotList.filter(spot => {
+                        if(spot["Code"] == obj.spotCode){
+                            return spot
+                        }
+                    })
+                    obj.spot = spot[0]
+                    return obj
+                })
+            })
+            .catch((e) => {
+                alert(e);
+            })
+            this.isEditSchedule = false
+        },
+        deleteSchedule: function(schedule){
+            console.log('削除前のschedules')
+            console.log(this.schedules)
+            this.axios.delete('http://localhost:3000/api/deleteschedule',{
+            params: {
+                scheduleId: schedule.id,
+                travelId: schedule.travelId
+            }})
+            .then((response) => {
+                console.log(response)
+                this.schedules = response.data.map(obj=>{
+                    //spotCodeしか来ないので、spotlistから情報を加えておく
+                    const spot = spotList.filter(spot => {
+                        if(spot["Code"] == obj.spotCode){
+                            return spot
+                        }
+                    })
+                    obj.spot = spot[0]
+                    return obj
+                })
+            })
+            .catch((e) => {
+                alert(e)
+            })
+            console.log('削除後のschedules')
             console.log(this.schedules)
         },
-        editSchedule: async function(schedule){
+        editSchedule: function(schedule){
+            //モーダルの表示を行う（編集内容の更新はupdateSchedule）
+            console.log('scheduleの編集')
             console.log(schedule)
             this.isEditSchedule = true
             this.tmpSchedule = schedule
-
         }
 
     },
@@ -97,7 +149,7 @@
         console.log('GETの実行')
         this.axios.get('http://localhost:3000/api/showschedule',{
             params: {
-                travelId: 1
+                travelId: this.travel.id
             }
         })
           .then((response) => {
@@ -113,9 +165,8 @@
             })
           })
           .catch((e) => {
-            alert(e);
-          });
-        
+            alert(e)
+          })
     },
 
 

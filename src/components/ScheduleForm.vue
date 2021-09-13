@@ -58,7 +58,7 @@
         park: 'すべて',
         area: 'すべて',
         type:'すべて',
-        startTime: `${new Date().getHours()}:${('00' + new Date().getMinutes()).slice(-2)}`,
+        startTime: '',
         spot: '',
         memo: ''
     }),
@@ -110,28 +110,35 @@
             this.$emit("submitNewSchedule",newSchedule)
         },
         updateSchedule: function(){
-            console.log("update")            
+            const newSchedule = this.schedule
             const spot = spotList.filter(spot => spot['name'] == this.spot)[0]
-            const newSchedule = {
-                "startTime" : new Date(`2021/09/08 ${this.startTime}`),
-                "spot" : spot,
-                "memo" : this.memo
-            }
-            this.$emit("unpdateSchedule",newSchedule)
+            //newScheduleに対して、入力されたstart、memo、spotを上書き
+            newSchedule.memo = this.memo
+            newSchedule.spot = spot
+            console.log(newSchedule)
+            const date = new Date(newSchedule.startTime)
+            const year = date.getFullYear()
+            const month = date.getMonth()
+            const day = date.getDate()
+            console.log(`${year}/${month}/${day} ${this.startTime}`)
+            newSchedule.startTime = new Date (`${year}/${month}/${day} ${this.startTime}`)
+            this.$emit("updateSchedule",newSchedule)
         }
     },
     mounted() {
-        //startTimeに現在時刻を入れる
-        this.startTime = `${new Date().getHours()}:${('00' + new Date().getMinutes()).slice(-2)}`
-        console.log(this.schedule)
         //編集の場合はpropsの情報でdataを上書きする
         if(this.mode == 'edit'){
             this.spot = this.schedule.spot.name
             this.park = this.schedule.spot.park
             this.area = this.schedule.spot.area
             this.type = this.schedule.spot.type
-            this.startTime = this.schedule.startTime
+            const date = new Date(this.schedule.startTime)
+            this.startTime = `${date.getHours()}:${('00' + date.getMinutes()).slice(-2)}`
             this.memo = this.schedule.memo
+        }
+        else{
+        //新規の場合startTimeに現在時刻を入れる
+        this.startTime = `${new Date().getHours()}:${('00' + new Date().getMinutes()).slice(-2)}`
         }
     },
   }
