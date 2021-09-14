@@ -4,7 +4,7 @@
             <v-row justify="center">
                 <v-col cols="12" md="9">
                         <v-row class="ma-1">
-                            <h1>{{`${travel.date}　${travel.name}`}}</h1>
+                            <h1>{{`${$store.state.travel.date}　${$store.state.travel.name}`}}</h1>
                             <v-spacer></v-spacer>
                             <v-btn class="mx-1" fab dark color="primary" @click="isCreateSchedule=true">
                                 <v-icon dark>
@@ -59,7 +59,7 @@
         recordSchedule: function(newSchedule){
             console.log('POSTの実行')        
             this.axios.post('http://localhost:3000/api/createschedule',{
-                travelId: this.travel.id,
+                travelId: this.$store.state.travel.id,
                 schedule: newSchedule
             })
             .then((response) => {
@@ -149,7 +149,7 @@
         console.log('GETの実行')
         this.axios.get('http://localhost:3000/api/showschedule',{
             params: {
-                travelId: this.travel.id
+                travelId: this.$store.state.travel.id
             }
         })
           .then((response) => {
@@ -167,6 +167,7 @@
           .catch((e) => {
             alert(e)
           })
+        //console.log(this.$store.state.travel)
     },
 
 
