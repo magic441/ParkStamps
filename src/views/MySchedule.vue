@@ -51,7 +51,7 @@
         }
     },
     props: {
-        travel: Object
+        //travel: Object
     },
     computed:{
     },
@@ -153,6 +153,7 @@
             }
         })
           .then((response) => {
+            console.log(response)
             this.schedules = response.data.map(obj=>{
                 //spotCodeしか来ないので、spotlistから情報を加えておく
                 const spot = spotList.filter(spot => {

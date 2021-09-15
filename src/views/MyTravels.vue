@@ -32,7 +32,7 @@
                                 <v-text-field v-model="name" label="名前"></v-text-field>
                             </v-col>
                             <v-col cols="2" align-self="center">
-                                <v-btn>登録</v-btn>
+                                <v-btn @click="createTravel">登録</v-btn>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -65,24 +65,22 @@
     computed:{
     },
     methods: {
-        deleteTravel: function(travel){
-            console.log('travelの削除をする')
-            this.axios.delete('http://localhost:3000/api/deletetravel',{
-            params: {
-                userId: travel.userId,
-                travelId: travel.id
-            }})
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((e) => {
-                alert(e)
-            })
-        },
         createTravel: function(){
             console.log('travelをCreateする')
-            
-            
+            const newTravel = {
+                userId: 1,
+                date: new Date(this.date),
+                name: this.name
+            }
+            this.axios.post('http://localhost:3000/api/createtravel',newTravel)
+            .then((response) => {
+                console.log(response)
+                this.travels = response.data
+            })
+            .catch((e) => {
+                alert(e);
+            })
+            this.isCreateTravel = false
         },
         deleteTravel: function(travel){
             console.log('travelの削除をする')
@@ -92,11 +90,18 @@
                 travelId: travel.id
             }})
             .then((response) => {
-                console.log(response)
+                this.travels = response.data
             })
             .catch((e) => {
                 alert(e)
             })
+        },
+        editTravel: function(travel){
+            console.log('travelの編集')
+            console.log(travel)
+            this.$store.commit('changeTmpTravel', travel)
+            //以降はtravel.dateはdate型ではなくyyyy/mm/ddのStringで扱う
+            this.$router.push({ name: "MySchedule"}).catch(() => {}) 
         },
     },
     mounted() {
