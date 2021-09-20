@@ -40,10 +40,11 @@
         auth: function(){
             console.log('Auth')
             this.axios.post('http://localhost:3000/api/auth',{
-                loginId: this.loginId,
+                username: this.loginId,
                 password: this.password
             })
             .then((response) => {
+                //this.$store.commit('changeUserId', response.userId)
                 console.log(response)
             })
             .catch((e) => {
