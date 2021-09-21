@@ -22,13 +22,13 @@
                 <v-card>
                     <v-container fluid>
                         <v-row>
-                            <v-col cols="2">
+                            <v-col cols="4">
                                 <v-text-field v-model="date" label="日付" v-on:click="isShowDatePicker=true"></v-text-field>
                                     <v-dialog v-model="isShowDatePicker" max-width="400px">
                                         <v-date-picker v-model="date"/>
                                     </v-dialog>
                             </v-col>
-                            <v-col cols="8" align-self="center">
+                            <v-col cols="6" align-self="center">
                                 <v-text-field v-model="name" label="名前"></v-text-field>
                             </v-col>
                             <v-col cols="2" align-self="center">
