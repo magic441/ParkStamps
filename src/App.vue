@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <v-app-bar
-      app
-      color="primary"
-      dark
+      color="base"
     >
     </v-app-bar>
     <v-main>

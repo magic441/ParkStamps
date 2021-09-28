@@ -10,10 +10,14 @@ export default new Vuex.Store({
   plugins: [createPersistedState({ storage: window.sessionStorage })],
   state: {
     travel:{},
+    user:{},
   },
   mutations: {
     changeTmpTravel:function(state, newTravel){
       state.travel = newTravel
+    },
+    changeUser:function(state, newUser){
+      state.user = newUser
     }
   },
   actions: {

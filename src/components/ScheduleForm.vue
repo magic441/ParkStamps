@@ -102,6 +102,9 @@
     methods: {
         submitSchedule: function(){
             const spot = spotList.filter(spot => spot['name'] == this.spot)[0]
+            if(!spot){
+                return
+            }
             const newSchedule = {
                 "startTime" : new Date(`2021/09/08 ${this.startTime}`),
                 "spot" : spot,

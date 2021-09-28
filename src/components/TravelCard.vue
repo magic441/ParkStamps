@@ -1,21 +1,12 @@
 <template>
-    <v-card outlined>
-        <v-card-title>
-            <v-row>
-                <v-col cols="2">
-                    {{date}}
-                </v-col>
-                <v-col cols="8">
-                    {{travel.name}}
-                </v-col>
-                <v-col cols="1" >
-                    <v-icon @click="editTravel(travel)">mdi-square-edit-outline</v-icon>
-                </v-col>
-                <v-col cols="1">
-                    <v-icon @click="isDeleteTravel=true">mdi-delete-outline</v-icon>
-                </v-col>
-            </v-row>
+    <v-card outlined color="" @click="editTravel(travel)" hover>
+        <v-card-title :style="{ color: $vuetify.theme.themes.light.title}">
+            {{date}}　 {{travel.name}}
         </v-card-title>
+        <v-card-text>
+           
+        </v-card-text>
+
         <v-dialog v-model="isDeleteTravel" max-width="400px">
             <v-card>
                 <v-container fluid>
@@ -47,7 +38,7 @@
     computed:{
         date: function(){
             const datetime = new Date(this.travel.date)
-            return `${datetime.getFullYear()}/${datetime.getMonth()}/${datetime.getDay()}`
+            return `${datetime.getFullYear()}/${datetime.getMonth() +1}/${datetime.getDate()}`
         }
     },
     methods: {

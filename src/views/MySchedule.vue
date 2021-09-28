@@ -6,7 +6,7 @@
                         <v-row class="ma-1">
                             <h1>{{`${$store.state.travel.date}　${$store.state.travel.name}`}}</h1>
                             <v-spacer></v-spacer>
-                            <v-btn class="mx-1" fab dark color="primary" @click="isCreateSchedule=true">
+                            <v-btn class="mx-1" fab dark color="secondary" @click="isCreateSchedule=true" elevation="0">
                                 <v-icon dark>
                                     mdi-pencil
                                 </v-icon>
