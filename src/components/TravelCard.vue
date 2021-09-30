@@ -1,29 +1,21 @@
 <template>
-    <v-card outlined color="" @click="editTravel(travel)" hover>
-        <v-card-title :style="{ color: $vuetify.theme.themes.light.title}">
-            {{date}}　 {{travel.name}}
-        </v-card-title>
-        <v-card-text>
-           
-        </v-card-text>
-
-        <v-dialog v-model="isDeleteTravel" max-width="400px">
-            <v-card>
-                <v-container fluid>
+    <v-hover v-slot:default="{ hover }">
+        <v-card outlined color="">
+            <v-card-title :style="{ color: $vuetify.theme.themes.light.title}">
                     <v-row>
-                        <v-col cols="3">
+                        <v-col cols="10">
+                            {{date}}　 {{travel.name}}
                         </v-col>
-                        <v-col cols="6" align-self="center">
-                                削除しますか？
+                        <v-col cols="1" v-if="hover">
+                            <v-icon @click="editTravel(travel)">mdi-square-edit-outline</v-icon>
                         </v-col>
-                        <v-col cols="3">
-                            <v-btn @click="deleteTravel(travel)">削除</v-btn>
+                        <v-col cols="1" v-if="hover">
+                            <v-icon @click="isDeleteSchedule=true">mdi-delete-outline</v-icon>
                         </v-col>
                     </v-row>
-                </v-container>
-            </v-card>
-        </v-dialog>       
-    </v-card>
+            </v-card-title>
+        </v-card>
+    </v-hover>
 </template>
 
 <script>
@@ -59,4 +51,5 @@
 </script>
 
 <style scoped>
+
 </style>

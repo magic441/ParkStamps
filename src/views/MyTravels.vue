@@ -22,9 +22,9 @@
                     </v-row>
                     <v-dialog v-model="isCreateTravel" max-width="800px" v-if="isCreateTravel">
                         <v-card>
-                            <v-container fluid>
+                            <v-container>
                                 <v-row>
-                                    <v-col cols="4">
+                                    <v-col cols="3">
                                         <v-text-field v-model="date" label="日付" v-on:click="isShowDatePicker=true"></v-text-field>
                                             <v-dialog v-model="isShowDatePicker" max-width="400px">
                                                 <v-date-picker v-model="date"/>
@@ -106,7 +106,7 @@
             console.log(travel)
             this.$store.commit('changeTmpTravel', travel)
             //以降はtravel.dateはdate型ではなくyyyy/mm/ddのStringで扱う
-            this.$router.push({ name: "MySchedule"}).catch(() => {}) 
+            this.$router.push({ name: "MyScheduleChart"}).catch(() => {}) 
         },
     },
     mounted() {

@@ -9,7 +9,7 @@
                     <v-row class="text-h2 mb-6 text-center">
                     </v-row>
                     <v-row>
-                        <v-card width="400px" class="mx-auto mt-5" rounded="xl">
+                        <v-card width="80vw" class="mx-auto mt-5" rounded="xl">
                             <v-card-text>
                             <v-form>
                                 <v-text-field prepend-icon="mdi-account-circle" v-model="loginId" label="ユーザ名"/>
