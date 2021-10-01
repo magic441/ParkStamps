@@ -6,11 +6,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
     path: '/myschedule',
     name: 'MySchedule',
     props: true,
@@ -29,7 +24,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/MyTravels.vue')
   },
   {
-    path: '/login',
+    path: '/',
     name: 'Login',
     props: true,
     // route level code-splitting

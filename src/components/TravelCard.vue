@@ -1,7 +1,7 @@
 <template>
     <v-hover v-slot:default="{ hover }">
         <v-card outlined color="">
-            <v-card-title :style="{ color: $vuetify.theme.themes.light.title}">
+            <v-card-title>
                     <v-row>
                         <v-col cols="10">
                             {{date}}　 {{travel.name}}

@@ -1,24 +1,30 @@
 <template>
     <v-app>
         <v-container fluid>
-            <v-row class="ma-1">
-                <h1>{{`${$store.state.travel.date}　${$store.state.travel.name}`}}</h1>
-            </v-row>
-            <v-row>
-                <v-timeline dense align-top>
-                    <TimeLineItem v-for="schedule in schedules" v-bind:key="schedule.name" v-bind:schedule="schedule"/>
-                </v-timeline>
-            </v-row>
-            <v-row>
-                <v-spacer/>
-                <v-btn color="secondary" @click="isCreateSchedule=true" elevation="0">
-                    <v-icon>
-                        mdi-pencil
-                    </v-icon>
-                </v-btn>
+            <v-row justify="center">
+                <v-col cols="12" md="9">
+                    <v-row class="ma-1">
+                        <h1>{{`${$store.state.travel.date}　${$store.state.travel.name}`}}</h1>
+                    </v-row>
+                        <v-timeline dense align-top>
+                            <TimeLineItem v-for="schedule in schedules" v-bind:key="schedule.name" v-bind:schedule="schedule"
+                             v-on:deleteSchedule="deleteSchedule" v-on:editSchedule="editSchedule"/>
+                        </v-timeline>
+                    <v-row>
+                        <v-spacer/>
+                        <v-btn color="secondary" @click="isCreateSchedule=true" elevation="0">
+                            <v-icon>
+                                mdi-pencil
+                            </v-icon>
+                        </v-btn>
+                    </v-row>
+                </v-col>
             </v-row>
             <v-dialog v-model="isCreateSchedule" max-width="800px" v-if="isCreateSchedule">
                 <ScheduleForm v-on:submitNewSchedule="recordSchedule" :mode="'create'"/>
+            </v-dialog>
+            <v-dialog v-model="isEditSchedule" max-width="800px" v-if="isEditSchedule">
+                <ScheduleForm :mode="'edit'" :schedule="tmpSchedule" v-on:updateSchedule="updateSchedule"/>
             </v-dialog>
         </v-container>
     </v-app>

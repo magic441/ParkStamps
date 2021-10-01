@@ -1,16 +1,40 @@
 <template>
     <v-timeline-item color="sea">
-      <v-row>
-        <v-col cols="2">
-            <strong>{{startTimeStr}}</strong>
-        </v-col>
-        <v-col cols="8">
-          <strong>{{schedule.spot.name}}</strong>
-          <div class="text-caption">
-            {{schedule.memo}}
-          </div>
-        </v-col>
-      </v-row>
+      <v-hover v-slot:default="{ hover }">
+        <v-row>
+          <v-col cols="2">
+              <strong>{{startTimeStr}}</strong>
+          </v-col>
+          <v-col cols="7">
+            <strong>{{schedule.spot.name}}</strong>
+            <div class="text-caption">
+              {{schedule.memo}}
+            </div>
+          </v-col>
+          <v-col cols="1" v-if="hover">
+              <v-icon @click="editSchedule(schedule)">mdi-square-edit-outline</v-icon>
+          </v-col>
+          <v-col cols="1" v-if="hover">
+              <v-icon @click="isDeleteSchedule=true">mdi-delete-outline</v-icon>
+          </v-col>
+        </v-row>
+      </v-hover>
+      <v-dialog v-model="isDeleteSchedule" max-width="400px">
+        <v-card>
+            <v-container fluid>
+                <v-row>
+                    <v-col cols="3">
+                    </v-col>
+                    <v-col cols="6" align-self="center">
+                            削除しますか？
+                    </v-col>
+                    <v-col cols="3">
+                        <v-btn @click="deleteSchedule(schedule)">削除</v-btn>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-card>
+      </v-dialog>
     </v-timeline-item>
 </template>
 
@@ -21,7 +45,7 @@
         schedule: Object
     },
     data: () => ({
-        isDeleteTravel: false
+        isDeleteSchedule: false
     }),
     computed:{
         startTimeStr: function(){
@@ -30,6 +54,13 @@
         }
     },
     methods: {
+      deleteSchedule: function(schedule){
+          this.isDeleteSchedule=false
+          this.$emit("deleteSchedule",schedule)
+      },
+      editSchedule: function(schedule){
+          this.$emit("editSchedule",schedule)
+      }
     },
     mounted() {
     }

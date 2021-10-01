@@ -61,7 +61,7 @@
                 self.$router.push({ name: "MyTravels"}).catch(() => {}) 
             })
             .catch((e) => {
-                alert(e);
+                alert("ログインに失敗しました");
             })
         }
 
