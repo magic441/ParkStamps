@@ -3,22 +3,17 @@
         <v-container fill-height>
             <v-row>
                 <v-col>
-                    <v-row class="text-h2 mb-6 text-center" :style="{ color: $vuetify.theme.themes.light.title}" justify="center">
-                        Park Stamps
-                    </v-row>
-                    <v-row class="text-h2 mb-6 text-center">
-                    </v-row>
                     <v-row>
                         <v-card width="80vw" class="mx-auto mt-5" rounded="xl">
                             <v-card-text>
                             <v-form>
+                                <v-text-field prepend-icon="mdi-email" v-model="mail" label="e-mail"/>
                                 <v-text-field prepend-icon="mdi-account-circle" v-model="loginId" label="ユーザ名"/>
                                 <v-text-field prepend-icon="mdi-lock" type="password" label="パスワード" v-model="password"/>
                             </v-form>
                             </v-card-text>
                             <v-card-actions>
-                                <v-btn text @click="auth" color="primary">ログイン</v-btn>
-                                <v-btn text @click="$router.push({ name: 'Signup'})" color="primary">新規登録</v-btn>
+                                <v-btn text @click="signup" color="primary">登録</v-btn>
                             </v-card-actions>            
                         </v-card>
                     </v-row>
@@ -39,7 +34,8 @@
         return {
             debug: false,
             loginId:'',
-            password: ''
+            password: '',
+            mail:''
         }
     },
     props: {
@@ -64,6 +60,27 @@
             .catch((e) => {
                 alert("ログインに失敗しました");
             })
+        },
+        signup:function(){
+            let self = this
+            console.log(this.mail)
+            this.axios.post('http://localhost:3000/api/signup',{
+                mail: this.mail,
+                username: this.loginId,
+                password: this.password
+            })
+            .then((response) => {
+                console.log(response)
+                if(!response.data.signup){
+                    alert('既に登録されています')
+                    return
+                }
+                self.$router.push({ name: "Login"}).catch(() => {}) 
+            })
+            .catch((e) => {
+                alert("登録に失敗しました");
+            })
+
         }
 
     },

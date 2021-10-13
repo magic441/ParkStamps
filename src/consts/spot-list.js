@@ -2167,5 +2167,23 @@ export default Object.freeze(
 		"area": "パーク内",
 		"name": "ドリーマーズ・オン・ステージ",
 		"src": "https://media1.tokyodisneyresort.jp/images/adventure/show/2018_thum_name.jpg?mod=20210617122155"
+	},
+	{
+		"Code": "OTH9998",
+		"park": "東京ディズニーシー",
+		"type": "その他",
+		"area": "その他",
+		"name": "その他",
+		"src": ""
+	},
+	{
+		"Code": "OTH9999",
+		"park": "東京ディズニーランド",
+		"type": "その他",
+		"area": "その他",
+		"name": "その他",
+		"src": ""
 	}
+
+
 ])
