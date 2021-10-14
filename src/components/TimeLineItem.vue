@@ -1,5 +1,5 @@
 <template>
-    <v-timeline-item color="sea">
+    <v-timeline-item v-bind:color="colortype">
       <v-hover v-slot:default="{ hover }">
         <v-row>
           <v-col cols="2">
@@ -51,7 +51,23 @@
         startTimeStr: function(){
             const date = new Date(this.schedule.startTime)
             return `${date.getHours()}:${('00' + date.getMinutes()).slice(-2)}`            
+        },
+        colortype: function(){
+          switch(this.schedule.spot.type){
+            case "アトラクション":
+              return "attraction"
+            case "レストラン":
+              return "restaurant"
+            case "ショップ":
+              return "shop"
+            case "パレード/ショー":
+              return "show"
+            case "グリーティング":
+              return "greeting"
+          }
+          return "none"
         }
+        
     },
     methods: {
       deleteSchedule: function(schedule){

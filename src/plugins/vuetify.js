@@ -15,7 +15,13 @@ export default new Vuetify({
             base: colors.purple.lighten5, // #F3E5F5
             title: colors.brown.lighten1,
             land: colors.pink.lighten5,
-            sea: colors.blue.lighten5            
+            sea: colors.blue.lighten5,
+            attraction: colors.pink.lighten5,
+            show: colors.blue.lighten5,
+            greeting: colors.purple.lighten5,
+            shop: colors.yellow.lighten5,
+            restaurant: colors.green.lighten5,
+            none: colors.grey.lighten3
           },
         },
       },

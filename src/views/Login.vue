@@ -12,7 +12,7 @@
                         <v-card width="80vw" class="mx-auto mt-5" rounded="xl">
                             <v-card-text>
                             <v-form>
-                                <v-text-field prepend-icon="mdi-account-circle" v-model="loginId" label="ユーザ名"/>
+                                <v-text-field prepend-icon="mdi-email" v-model="loginId" label="e-mail"/>
                                 <v-text-field prepend-icon="mdi-lock" type="password" label="パスワード" v-model="password"/>
                             </v-form>
                             </v-card-text>
