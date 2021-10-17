@@ -51,7 +51,7 @@
         auth: function(){
             let self = this
             console.log('Auth')
-            this.axios.post('http://localhost:3000/api/auth',{
+            this.axios.post('https://pure-gorge-50096.herokuapp.com/api/auth',{
                 username: this.loginId,
                 password: this.password
             })

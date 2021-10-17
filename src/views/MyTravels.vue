@@ -77,7 +77,7 @@
                 name: this.name
             }
             //console.log(newTravel)
-            this.axios.post('http://localhost:3000/api/createtravel',newTravel)
+            this.axios.post('https://pure-gorge-50096.herokuapp.com/api/createtravel',newTravel)
             .then((response) => {
                 console.log(response)
                 this.travels = response.data
@@ -89,7 +89,7 @@
         },
         deleteTravel: function(travel){
             console.log('travelの削除をする')
-            this.axios.delete('http://localhost:3000/api/deletetravel',{
+            this.axios.delete('https://pure-gorge-50096.herokuapp.com/api/deletetravel',{
             params: {
                 userId: travel.userId,
                 travelId: travel.id
@@ -112,7 +112,7 @@
     mounted() {
         //travelIdからtravelsを持ってくる  
         console.log('GETの実行')
-        this.axios.get('http://localhost:3000/api/showtravel',{
+        this.axios.get('https://pure-gorge-50096.herokuapp.com/api/showtravel',{
             params: {
                 userId: this.$store.state.user.id
             }

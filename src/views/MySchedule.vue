@@ -58,7 +58,7 @@
     methods: {
         recordSchedule: function(newSchedule){
             console.log('POSTの実行')        
-            this.axios.post('http://localhost:3000/api/createschedule',{
+            this.axios.post('https://pure-gorge-50096.herokuapp.com/api/createschedule',{
                 travelId: this.$store.state.travel.id,
                 schedule: newSchedule
             })
@@ -83,7 +83,7 @@
         updateSchedule: function(newSchedule){
             console.log('UPDATEの実行')
             console.log(newSchedule)
-            this.axios.put('http://localhost:3000/api/updateschedule',{
+            this.axios.put('https://pure-gorge-50096.herokuapp.com/api/updateschedule',{
                 scheduleId: newSchedule.id,
                 travelId: newSchedule.travelId,
                 startTime: newSchedule.startTime,
@@ -111,7 +111,7 @@
         deleteSchedule: function(schedule){
             console.log('削除前のschedules')
             console.log(this.schedules)
-            this.axios.delete('http://localhost:3000/api/deleteschedule',{
+            this.axios.delete('https://pure-gorge-50096.herokuapp.com/api/deleteschedule',{
             params: {
                 scheduleId: schedule.id,
                 travelId: schedule.travelId
@@ -147,7 +147,7 @@
     mounted() {
         //travelIdからschedulesを持ってくる  
         console.log('GETの実行')
-        this.axios.get('http://localhost:3000/api/showschedule',{
+        this.axios.get('https://pure-gorge-50096.herokuapp.com/api/showschedule',{
             params: {
                 travelId: this.$store.state.travel.id
             }
