@@ -2,6 +2,10 @@ module.exports = {
   transpileDependencies: [
     'vuetify'
   ],
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/ParkStamps-front/'   //任意
+    : '/',
+  outputDir: 'docs',
   devServer: {
     proxy: {
       "/api": {
