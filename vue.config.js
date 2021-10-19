@@ -3,7 +3,7 @@ module.exports = {
     'vuetify'
   ],
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/ParkStamps-front/'   //任意
+    ? '/ParkStamps/'   //任意
     : '/',
   outputDir: 'docs',
   devServer: {
